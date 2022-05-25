@@ -1,0 +1,44 @@
+.columnHeader {
+  background-color: #eee;
+  font-weight: 500;
+  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
+  font-size: 14px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  cursor: grab;
+}
+
+.matrix {
+  margin: none;
+}
+
+.cell {
+  font-size: 13px;
+  border: solid 1px gray;
+}
+
+.numCell {
+  font-size: 13px;
+  text-align: center;
+  padding: 20px 10px;
+  cursor: grab;
+}
+
+.number {
+  background: #eee;
+  border: 1px solid gray;
+}
+
+.cellInput {
+  border-radius: 0;
+  border: none;
+  padding: 1px;
+}
+
+.cellInput:focus {
+  outline: none;
+  border-radius: 0;
+  border: 1px solid blue;
+  box-shadow: 0 0 0 1pt grey;
+}
