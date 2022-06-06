@@ -87,15 +87,14 @@ const RowMenu = ({ contextMenu, handleClose, selectedRow: idx }) => {
     dispatch(setPasteRowContent(rows[idx]));
   };
   const pasteRow = () => {
+    console.log(pasteRowContent);
     const rowToPaste = { ...pasteRowContent };
     rowToPaste.id = idx;
     dispatch(
       setRows(
-        [
-          ...rows.slice(0, idx - 1),
-          pasteRowContent,
-          ...rows.slice(idx - 1),
-        ].map((row, index) => ({ ...row, id: index + 1 }))
+        [...rows.slice(0, idx), pasteRowContent, ...rows.slice(idx + 1)].map(
+          (row, index) => ({ ...row, id: index })
+        )
       )
     );
   };

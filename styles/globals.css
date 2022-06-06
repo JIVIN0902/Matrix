@@ -13,10 +13,6 @@ html,
   border: none;
 }
 
-.MuiDataGrid-columnSeparator {
-  display: none !important;
-}
-
 a {
   color: inherit;
   text-decoration: none;

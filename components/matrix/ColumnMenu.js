@@ -13,6 +13,7 @@ import { MenuItem } from "@mui/material";
 import ContentCutIcon from "@mui/icons-material/ContentCut";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
+import { DEFAULT_COL_WIDTH } from "../../constants";
 
 export function incrementString(value) {
   let carry = 1;
@@ -65,7 +66,6 @@ const ColumnMenu = ({ currentColumn }) => {
   };
 
   const addColumn = (direction) => {
-    console.log(direction);
     const idx = columns.findIndex((col) => col.field === currentColumn.field);
     if (direction > 0) {
       const before = columns.slice(0, idx + 1);
@@ -78,7 +78,7 @@ const ColumnMenu = ({ currentColumn }) => {
             i === 0
               ? incrementString(before[before.length - 1].headerName)
               : incrementString(newCols[i - 1].headerName),
-          width: 150,
+          width: DEFAULT_COL_WIDTH,
           editable: true,
         };
         newCols.push(newCol);
@@ -114,9 +114,9 @@ const ColumnMenu = ({ currentColumn }) => {
             i > 0
               ? incrementString(newCols[i - 1].headerName)
               : before.length > 1
-              ? incrementString(before[before.length - 1].headerName)
-              : "A",
-          width: 150,
+                ? incrementString(before[before.length - 1].headerName)
+                : "A",
+          width: DEFAULT_COL_WIDTH,
           editable: true,
         };
         newCols.push(newCol);
@@ -152,14 +152,14 @@ const ColumnMenu = ({ currentColumn }) => {
         col.headerName === "A"
           ? "col-a"
           : col.headerName === "B"
-          ? "col-b"
-          : "",
+            ? "col-b"
+            : "",
       cellClassName:
         col.headerName === "A"
           ? "col-a"
           : col.headerName === "B"
-          ? "col-b"
-          : "",
+            ? "col-b"
+            : "",
     }));
   };
 
@@ -173,7 +173,7 @@ const ColumnMenu = ({ currentColumn }) => {
       };
     });
 
-    dispatch(setColumns([...before, ...after]));
+    dispatch(setColumns(changeColumnColors([...before, ...after])));
   };
 
   const clearColumn = () => {
