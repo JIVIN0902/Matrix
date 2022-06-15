@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   DEFAULT_CHART_CELL_HEIGHT,
   DEFAULT_CHART_CELL_WIDTH,
+  DEFAULT_CHART_LINE_HEIGHT,
   DEFAULT_COL_WIDTH,
 } from "../../constants";
 
@@ -65,10 +66,10 @@ const initialState = {
   pasteColumnContent: {},
   pasteRowContent: {},
   chartData: [],
-  showState: "",
   chartCellDimensions: {
     width: DEFAULT_CHART_CELL_WIDTH,
     height: DEFAULT_CHART_CELL_HEIGHT,
+    lineHeight: DEFAULT_CHART_LINE_HEIGHT,
   },
 };
 
@@ -100,9 +101,6 @@ export const matrixSlice = createSlice({
     setChartData: (state, action) => {
       state.chartData = action.payload;
     },
-    setShowState: (state, action) => {
-      state.showState = action.payload;
-    },
     setChartCellDimensions: (state, action) => {
       state.chartCellDimensions = action.payload;
     },
@@ -119,7 +117,6 @@ export const {
   setPasteColumnContent,
   setPasteRowContent,
   setChartData,
-  setShowState,
   setChartCellDimensions,
 } = matrixSlice.actions;
 

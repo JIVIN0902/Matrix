@@ -3,6 +3,7 @@ import { FormControl, Input, MenuItem, Select } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from "../../state/matrix/matrixSlice";
+import frameworks from "./frameworks";
 
 const TitleRow = ({ framework, setFramework }) => {
   const { title } = useSelector((state) => state.matrix);
@@ -19,8 +20,11 @@ const TitleRow = ({ framework, setFramework }) => {
           inputProps={{ "aria-label": "Without label" }}
         >
           <MenuItem value="Framework">Framework</MenuItem>
-          <MenuItem value="5M+2S">5M + 2S</MenuItem>
-          <MenuItem value="Risk Analysis">Risk Analysis</MenuItem>
+          {Object.keys(frameworks).map((key, index) => (
+            <MenuItem key={index} value={key}>
+              {key}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
       <Input

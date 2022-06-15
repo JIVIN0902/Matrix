@@ -20,15 +20,14 @@ import frameworks from "./frameworks";
 import { DEFAULT_COL_WIDTH } from "../../constants";
 import TitleRow from "./TitleRow";
 import Toolbar from "./Toolbar";
+import { changeColumnColors } from "./utils";
 
 LicenseInfo.setLicenseKey(
   "aec5ab206639e137899abb37e2c619c2Tz00NDQ1MixFPTE2ODUxMTE4MjY4MzEsUz1wcmVtaXVtLExNPXN1YnNjcmlwdGlvbixLVj0y"
 );
 
 export default function Matrix() {
-  const { rows, columns, chartData, showState } = useSelector(
-    (state) => state.matrix
-  );
+  const { rows, columns, chartData } = useSelector((state) => state.matrix);
   const [selectedRow, setSelectedRow] = React.useState();
   const [contextMenu, setContextMenu] = React.useState(null);
   const [framework, setFramework] = React.useState("Framework");
@@ -69,7 +68,6 @@ export default function Matrix() {
 
       dispatch(setColumns([...columns, ...newCols]));
     } else {
-      console.log(rows[0], isFramework);
       const cols = [
         {
           field: "id",
@@ -90,9 +88,6 @@ export default function Matrix() {
       });
 
       dispatch(setColumns([...cols]));
-      console.log(cols);
-      //   newCols.push(newCol);
-      // });
     }
 
     const modifiedRows = rows.map((row, index) => {
@@ -104,7 +99,6 @@ export default function Matrix() {
       });
       return newRow;
     });
-    // console.log(modifiedRows);
     dispatch(setRows([...modifiedRows]));
   };
 
@@ -168,6 +162,7 @@ export default function Matrix() {
   const groupRows = (col) => {
     if (isGrouped) {
       setRowGroupingModel([""]);
+      dispatch(setChartData([]));
       setIsGrouped(false);
     } else {
       setRowGroupingModel([col]);
@@ -181,21 +176,8 @@ export default function Matrix() {
     }
   }, [framework]);
 
-  React.useEffect(() => {
-    const groupedRows = apiRef.current.getRowGroupChildren({
-      groupId: 1,
-
-      // If true, the rows will be in the order displayed on screen
-      applySorting: true,
-
-      // If true, only the rows matching the current filters will be returned
-      applyFiltering: true,
-    });
-    console.log(groupedRows);
-  }, [apiRef]);
-
   const updateGroupingData = (data) => {
-    let keys = Object.keys(data.rows.tree);
+    const keys = Object.keys(data.rows.tree);
     keys = keys.filter((key) => key.includes("auto-generated-row"));
 
     const mapData = {};
@@ -211,11 +193,8 @@ export default function Matrix() {
     });
 
     if (mapData && Object.keys(mapData).length > 0 && chartData.length === 0) {
-      console.log(mapData);
       dispatch(setChartData(modifyChartData(mapData)));
     }
-    // dispatch(setChartData(mapData));
-    // console.log(data.rows.tree["auto-generated-row-a/Arya"]);
   };
 
   const modifyChartData = (chartData) => {
@@ -232,9 +211,12 @@ export default function Matrix() {
       });
       return nodeData;
     });
-    // console.log(nodes);
     return nodes;
   };
+
+  React.useEffect(() => {
+    dispatch(setColumns(changeColumnColors(columns)));
+  }, []);
 
   return (
     <div style={{ height: "100vh", width: "100%" }}>

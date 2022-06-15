@@ -10,7 +10,8 @@ import {
 } from "@mui/x-data-grid-premium";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useDispatch, useSelector } from "react-redux";
-import { setRows, setShowState } from "../../state/matrix/matrixSlice";
+import { setRows } from "../../state/matrix/matrixSlice";
+import { setShowState } from "../../state/app/appSlice";
 
 const Toolbar = ({ rowGroupingModelStr, readExcelFile, groupRows }) => {
   const { rows, title } = useSelector((state) => state.matrix);
@@ -57,8 +58,18 @@ const Toolbar = ({ rowGroupingModelStr, readExcelFile, groupRows }) => {
           color={rowGroupingModelStr === "b" ? "primary" : undefined}
         />
         <Chip
-          label="Charts"
-          onClick={() => dispatch(setShowState("chart"))}
+          label="Org Chart"
+          onClick={() => dispatch(setShowState("orgChart"))}
+          variant="outlined"
+        />
+        <Chip
+          label="Fish Bone"
+          onClick={() => dispatch(setShowState("fishbone"))}
+          variant="outlined"
+        />
+        <Chip
+          label="Mind Map"
+          onClick={() => dispatch(setShowState("mindMap"))}
           variant="outlined"
         />
       </Stack>
