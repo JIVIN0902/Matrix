@@ -309,6 +309,39 @@ const frameworks = {
       "KPI07",
     ],
   ],
+  Unknown: [
+    ["Effect", "Cause", "Example 01", "Example 02"],
+    ["Known-Effect", "Known-Cause", "No. Of Orders", "Type Of Product Sold"],
+    [
+      "Known-Effect",
+      "Known-Cause",
+      "Customer Order",
+      "First Time or Returning Customer",
+    ],
+    ["Known-Effect", "Unknown-Cause", "Revenue Per Order", "Multiple Reasons"],
+    ["Known-Effect", "Unknown-Cause", "Churn", "Multiple Reasons"],
+    ["Known-Effect", "Unknown-Cause", "Changes in Cart", "Multiple Reasons"],
+    [
+      "Known-Effect",
+      "Unknown-Cause",
+      "Order Location",
+      "Orders - Multiple Reasons",
+    ],
+    [
+      "Known-Effect",
+      "Unknown-Cause",
+      "Applicant do not turn up for Interview",
+      "Multiple Reasons",
+    ],
+    ["Unknown-Effect", "Known-Cause", "Multiple Effects", "Great Resignation"],
+    ["Unknown-Effect", "Known-Cause", "Multiple Effects", "Lack of Motivation"],
+    [
+      "Unknown-Effect",
+      "Unknown-Cause",
+      "Crime - Multiple Effects",
+      "Crime Multiple Causes",
+    ],
+  ],
 };
 
 export default frameworks;

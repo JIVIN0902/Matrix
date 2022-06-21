@@ -15,7 +15,6 @@ import {
   useGridApiRef,
   useKeepGroupedColumnsHidden,
 } from "@mui/x-data-grid-premium";
-import styled from "styled-components";
 import frameworks from "./frameworks";
 import { DEFAULT_COL_WIDTH } from "../../constants";
 import TitleRow from "./TitleRow";
@@ -177,6 +176,7 @@ export default function Matrix() {
   }, [framework]);
 
   const updateGroupingData = (data) => {
+    console.log(data);
     const keys = Object.keys(data.rows.tree);
     keys = keys.filter((key) => key.includes("auto-generated-row"));
 

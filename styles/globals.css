@@ -54,3 +54,7 @@ table {
   border-top: 1px solid black;
   bottom: 0;
 }
+
+#tree hr {
+  margin-top: 6px;
+}

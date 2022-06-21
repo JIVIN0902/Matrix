@@ -4,7 +4,6 @@ import FishboneChart from "fishbone-chart";
 import { useDispatch, useSelector } from "react-redux";
 import { setChartData } from "../../state/matrix/matrixSlice";
 import { setShowState } from "../../state/app/appSlice";
-// import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { useScreenshot } from "use-react-screenshot";
 
 const styles = { width: 40, height: 40, cursor: "pointer" };

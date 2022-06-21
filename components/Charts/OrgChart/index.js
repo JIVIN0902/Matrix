@@ -181,183 +181,422 @@
 
 // export default App;
 
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
 
-import { OrgChartComponent } from "./Chart";
-import * as d3 from "d3";
-import { useSelector } from "react-redux";
-import shortUUID from "short-uuid";
+// import styled from "styled-components";
+// import { OrgChartComponent } from "./Chart";
+// import * as d3 from "d3";
+// import { useDispatch, useSelector } from "react-redux";
+// import shortUUID from "short-uuid";
+// import NodeOptions from "./NodeOptions";
+// import OptionModal from "./OptionModal";
+// import { ArrowBack } from "@mui/icons-material";
+// import { setShowState } from "../../../state/app/appSlice";
+// import { setChartData } from "../../../state/matrix/matrixSlice";
 
-const translator = shortUUID();
-const App = (props) => {
-  const [data, setData] = useState(null);
-  let addNodeChildFunc = null;
-  const { chartData, title } = useSelector((state) => state.matrix);
+// const translator = shortUUID();
 
-  function addNode() {
-    const node = {
-      nodeId: "testtt",
-      parentNodeId: "O-1",
-      width: 330,
-      height: 147,
-      borderWidth: 1,
-      borderRadius: 5,
-      nodeImage: {
-        url: "https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/general.jpg",
-        width: 100,
-        height: 100,
-        centerTopDistance: 0,
-        centerLeftDistance: 0,
-        cornerShape: "ROUNDED",
-        shadow: true,
-        borderWidth: 0,
-      },
-      nodeIcon: {
-        icon: "https://to.ly/1yZnX",
-        size: 30,
-      },
-      connectorLineColor: {
-        red: 220,
-        green: 189,
-        blue: 207,
-        alpha: 1,
-      },
-      connectorLineWidth: 1,
-      dashArray: "",
-      expanded: false,
-      template: `<div>
-                  <div style="margin-left:80px;
-                              margin-top:10px;
-                              font-size:20px;
-                              font-weight:bold;
-                         ">Added Root Child </div>
-                 <div style="margin-left:80px;
-                              margin-top:3px;
-                              font-size:16px;
-                         ">Added position </div>
+// const OrgChart = () => {
+//   const [data, setData] = useState(null);
+//   const [open, setOpen] = useState(false);
+//   const [optionOpen, setOptionOpen] = useState(false);
+//   const [option, setOption] = useState("");
+//   let addNodeChildFunc = null;
+//   const { chartData, title } = useSelector((state) => state.matrix);
 
-                 <div style="margin-left:80px;
-                              margin-top:3px;
-                              font-size:14px;
-                         ">Added unit</div>
+//   function addNode() {
+//     const node = {
+//       nodeId: "testtt",
+//       parentNodeId: "O-1",
+//       width: 330,
+//       height: 147,
+//       borderWidth: 1,
+//       borderRadius: 5,
+//       nodeImage: {
+//         url: "https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/general.jpg",
+//         width: 100,
+//         height: 100,
+//         centerTopDistance: 0,
+//         centerLeftDistance: 0,
+//         cornerShape: "ROUNDED",
+//         shadow: true,
+//         borderWidth: 0,
+//       },
+//       nodeIcon: {
+//         icon: "https://to.ly/1yZnX",
+//         size: 30,
+//       },
+//       connectorLineColor: {
+//         red: 220,
+//         green: 189,
+//         blue: 207,
+//         alpha: 1,
+//       },
+//       connectorLineWidth: 1,
+//       dashArray: "",
+//       expanded: false,
+//       template: `<div>
+//                   <div style="margin-left:80px;
+//                               margin-top:10px;
+//                               font-size:20px;
+//                               font-weight:bold;
+//                          ">Added Root Child </div>
+//                  <div style="margin-left:80px;
+//                               margin-top:3px;
+//                               font-size:16px;
+//                          ">Added position </div>
 
-                 <div style="margin-left:200px;
-                             margin-top:15px;
-                             font-size:13px;
-                             position:absolute;
-                             bottom:5px;
-                            ">
-                      <div>Added office</div>
-                      <div style="margin-top:5px">Added area</div>
-                 </div>
-              </div>`,
-    };
+//                  <div style="margin-left:80px;
+//                               margin-top:3px;
+//                               font-size:14px;
+//                          ">Added unit</div>
 
-    addNodeChildFunc(node);
-  }
+//                  <div style="margin-left:200px;
+//                              margin-top:15px;
+//                              font-size:13px;
+//                              position:absolute;
+//                              bottom:5px;
+//                             ">
+//                       <div>Added office</div>
+//                       <div style="margin-top:5px">Added area</div>
+//                  </div>
+//               </div>`,
+//     };
 
-  function onNodeClick(nodeId) {
-    console.log("d3", d3.event);
-    alert("clicked " + nodeId);
-  }
+//     addNodeChildFunc(node);
+//   }
 
-  const defaults = {
-    width: 330,
-    height: 147,
-    borderWidth: 1,
-    borderRadius: 5,
-    nodeIcon: {
-      icon: "https://to.ly/1yZnX",
-      size: 30,
-    },
-    connectorLineColor: {
-      red: 0,
-      green: 0,
-      blue: 0,
-      alpha: 1,
-    },
-    connectorLineWidth: 1,
-    dashArray: "",
-    expanded: false,
-  };
+//   function onNodeClick(nodeId) {
+//     console.log("d3", d3.event);
+//     setOpen(true);
+//     // alert("clicked " + nodeId);
+//   }
 
-  const template = (title) => {
-    return `<div>
-                  <div style="margin-left:40px;
-                              margin-top:10px;
-                              font-size:20px;
-                              font-weight:bold;
-                         ">${title}</div>
-                 
-              </div>`;
-  };
+//   const defaults = {
+//     width: 330,
+//     height: 147,
+//     borderWidth: 1,
+//     borderRadius: 5,
+//     nodeIcon: {
+//       icon: "https://to.ly/1yZnX",
+//       size: 30,
+//     },
+//     connectorLineColor: {
+//       red: 0,
+//       green: 0,
+//       blue: 0,
+//       alpha: 1,
+//     },
+//     connectorLineWidth: 1,
+//     dashArray: "",
+//     expanded: false,
+//   };
+
+//   const dispatch = useDispatch();
+
+//   const template = (title, children) => {
+//     return `<div style="display:flex;justify-content:center;
+//               flex-direction:column;
+//              align-items:center;
+//              background-color:whitesmoke;
+//              width:100%;
+//              height: 100%">
+//                   <div style="font-size:20px;
+//                               font-weight:bold;
+//                               color:black;
+//                          ">${title}</div>
+//                   <div style="margin-top:3px;
+//                               color:black;
+//                               font-size:16px;
+//                          ">Added position </div>
+//               </div>`;
+//   };
+
+//   const modifyOrgChartData = () => {
+//     const modifiedData = [];
+//     const titleRow = {
+//       ...defaults,
+//       nodeId: "title",
+//       parentNodeId: "",
+//       _directSubordinates: chartData.slice(1).length,
+//       value: title,
+//       template: template(title),
+//     };
+//     modifiedData.push(titleRow);
+//     chartData.slice(1).map((array, index) => {
+//       const categoryRow = {
+//         ...defaults,
+//         nodeId: translator.new(),
+//         parentNodeId: "title",
+//         directSubordinates: array.length,
+//         value: array[0][0],
+//         template: template(array[0][0]),
+//       };
+//       modifiedData.push(categoryRow);
+//       array.map((subArray, idx) => {
+//         const causeRow = {
+//           ...defaults,
+//           parentNodeId: categoryRow.nodeId,
+//           nodeId: translator.new(),
+//           value: subArray[1],
+//           _directSubordinates: subArray.slice(2).length,
+//           template: template(subArray[1]),
+//         };
+
+//         modifiedData.push(causeRow);
+//         const ideasRows = subArray.slice(2).map((value, i) => ({
+//           ...defaults,
+//           nodeId: translator.new(),
+//           parentNodeId: causeRow.nodeId,
+//           value,
+//           _directSubordinates: 0,
+//           template: template(value),
+//         }));
+//         modifiedData.push(...ideasRows);
+//       });
+//     });
+//     setData(modifiedData);
+//     console.log(modifiedData);
+//   };
+
+//   useEffect(() => {
+//     // d3.json(
+//     //   "https://gist.githubusercontent.com/bumbeishvili/dc0d47bc95ef359fdc75b63cd65edaf2/raw/c33a3a1ef4ba927e3e92b81600c8c6ada345c64b/orgChart.json"
+//     // ).then((data) => {
+//     //   setData(data);
+//     //   console.log(data);
+//     // });
+//     modifyOrgChartData();
+//   }, [true]);
+
+//   return (
+//     <Chart>
+//       <ArrowBack
+//         sx={{ cursor: "pointer" }}
+//         fontSize="large"
+//         onClick={() => {
+//           dispatch(setShowState("matrix"));
+//           dispatch(setChartData([]));
+//         }}
+//       />
+//       <OrgChartComponent
+//         setClick={(click) => (addNodeChildFunc = click)}
+//         onNodeClick={onNodeClick}
+//         data={data}
+//       />
+//       <NodeOptions
+//         setOption={setOption}
+//         setOptionOpen={setOptionOpen}
+//         handleClose={() => setOpen(false)}
+//         open={open}
+//       />
+//       <OptionModal open={optionOpen} handleClose={() => setOptionOpen(false)} />
+//     </Chart>
+//   );
+// };
+
+// export default OrgChart;
+
+// const Chart = styled.div`
+//   height: 100vh !important;
+// `;
+
+// import React from "react";
+// import OrganizationChart from "nextjs-orgchart";
+
+// const PanZoomChart = () => {
+//   const ds = {
+//     name: "Lao Lao",
+//     title: "general manager",
+//     verticalLevel: 3,
+//     visibleLevel: 4,
+//     children: [
+//       { name: "Bo Miao", title: "department manager" },
+//       {
+//         name: "Su Miao",
+//         title: "department manager",
+//         children: [
+//           { name: "Tie Hua", title: "senior engineer" },
+//           {
+//             name: "Hei Hei",
+//             title: "senior engineer",
+//             children: [
+//               { name: "Pang Pang", title: "engineer" },
+//               {
+//                 name: "Xiang Xiang",
+//                 title: "UE engineer",
+//                 children: [
+//                   { name: "Dan Dan", title: "engineer" },
+//                   {
+//                     name: "Er Dan",
+//                     title: "engineer",
+//                     children: [
+//                       { name: "Xuan Xuan", title: "intern" },
+//                       { name: "Er Xuan", title: "intern" },
+//                     ],
+//                   },
+//                 ],
+//               },
+//             ],
+//           },
+//         ],
+//       },
+//       { name: "Hong Miao", title: "department manager" },
+//       {
+//         name: "Chun Miao",
+//         title: "department manager",
+//         children: [
+//           { name: "Bing Qin", title: "senior engineer" },
+//           {
+//             name: "Yue Yue",
+//             title: "senior engineer",
+//             children: [
+//               { name: "Er Yue", title: "engineer" },
+//               { name: "San Yue", title: "UE engineer" },
+//             ],
+//           },
+//         ],
+//       },
+//     ],
+//   };
+//   return (
+//     <OrganizationChart
+//       verticalLevel={3}
+//       datasource={ds}
+//       pan={true}
+//       zoom={true}
+//     />
+//   );
+// };
+
+// export default PanZoomChart;
+
+import OrgChart from "@balkangraph/orgchart.js";
+import { ArrowBack } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import short from "short-uuid";
+import { setShowState } from "../../../state/app/appSlice";
+import { setChartData } from "../../../state/matrix/matrixSlice";
+
+const styles = { width: 40, height: 40, cursor: "pointer" };
+
+const translator = short();
+const Chart = () => {
+  const [data, setData] = useState();
+  const [chart, setChart] = useState();
+  const { title, chartData } = useSelector((state) => state.matrix);
 
   const modifyOrgChartData = () => {
     const modifiedData = [];
     const titleRow = {
-      ...defaults,
-      nodeId: "title",
-      parentNodeId: "",
-      _directSubordinates: chartData.slice(1).length,
-      value: title,
-      template: template(title),
+      id: "title",
+      name: title,
+      children: `${chartData.slice(1).length} children`,
     };
     modifiedData.push(titleRow);
     chartData.slice(1).map((array, index) => {
       const categoryRow = {
-        ...defaults,
-        nodeId: translator.new(),
-        parentNodeId: "title",
-        directSubordinates: array.length,
-        value: array[0][0],
-        template: template(array[0][0]),
+        id: translator.new(),
+        pid: "title",
+        name: array[0][0],
+        children: `${array.length} children`,
       };
       modifiedData.push(categoryRow);
       array.map((subArray, idx) => {
         const causeRow = {
-          ...defaults,
-          parentNodeId: categoryRow.nodeId,
-          nodeId: translator.new(),
-          value: subArray[1],
-          _directSubordinates: subArray.slice(2).length,
-          template: template(subArray[1]),
+          pid: categoryRow.id,
+          id: translator.new(),
+          name: subArray[1],
+          children: `${subArray.slice(2).length} children`,
         };
 
         modifiedData.push(causeRow);
         const ideasRows = subArray.slice(2).map((value, i) => ({
-          ...defaults,
-          nodeId: translator.new(),
-          parentNodeId: causeRow.nodeId,
-          value,
-          _directSubordinates: 0,
-          template: template(value),
+          id: translator.new(),
+          pid: causeRow.id,
+          name: value,
         }));
         modifiedData.push(...ideasRows);
       });
     });
     setData(modifiedData);
-    console.log(modifiedData);
   };
+  const dispatch = useDispatch();
+
+  function pdf(nodeId) {
+    chart.exportPDF({
+      filename: "MyFileName.pdf",
+      expandChildren: true,
+      nodeId: nodeId,
+    });
+  }
+  function png(nodeId) {
+    chart.exportPNG({
+      filename: "MyFileName.png",
+      expandChildren: true,
+      nodeId: nodeId,
+    });
+  }
+  function svg(nodeId) {
+    chart.exportSVG({
+      filename: "MyFileName.svg",
+      expandChildren: true,
+      nodeId: nodeId,
+    });
+  }
 
   useEffect(() => {
-    // d3.json(
-    //   "https://gist.githubusercontent.com/bumbeishvili/dc0d47bc95ef359fdc75b63cd65edaf2/raw/c33a3a1ef4ba927e3e92b81600c8c6ada345c64b/orgChart.json"
-    // ).then((data) => {
-    //   setData(data);
-    //   console.log(data);
-    // });
     modifyOrgChartData();
-  }, [true]);
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      const chart = new OrgChart(document.getElementById("tree"), {
+        mode: "light",
+        enableSearch: true,
+        mouseScrool: OrgChart.action.zoom,
+        layout: OrgChart.mixed,
+        nodeBinding: {
+          field_0: "name",
+          field_1: "children",
+        },
+        template: "rony",
+        nodes: data,
+        menu: {
+          export_pdf: {
+            text: "Export PDF",
+            icon: OrgChart.icon.pdf(24, 24, "#7A7A7A"),
+            onClick: pdf,
+          },
+          export_png: {
+            text: "Export PNG",
+            icon: OrgChart.icon.png(24, 24, "#7A7A7A"),
+            onClick: png,
+          },
+          export_svg: {
+            text: "Export SVG",
+            icon: OrgChart.icon.svg(24, 24, "#7A7A7A"),
+            onClick: svg,
+          },
+        },
+      });
+      setChart(chart);
+    }
+  }, [data]);
 
   return (
-    <div>
-      <OrgChartComponent
-        setClick={(click) => (addNodeChildFunc = click)}
-        onNodeClick={onNodeClick}
-        data={data}
+    <>
+      <ArrowBack
+        sx={styles}
+        onClick={() => {
+          dispatch(setShowState("matrix"));
+          dispatch(setChartData([]));
+        }}
       />
-    </div>
+      <div style={{ width: "100vw", height: "100vh" }} id="tree"></div>
+    </>
   );
 };
 
-export default App;
+export default Chart;

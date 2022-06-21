@@ -72,6 +72,11 @@ const Toolbar = ({ rowGroupingModelStr, readExcelFile, groupRows }) => {
           onClick={() => dispatch(setShowState("mindMap"))}
           variant="outlined"
         />
+        <Chip
+          label="Word Cloud"
+          onClick={() => dispatch(setShowState("wordCloud"))}
+          variant="outlined"
+        />
       </Stack>
       <GridToolbarColumnsButton />
       <GridToolbarFilterButton />

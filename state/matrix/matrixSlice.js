@@ -71,6 +71,7 @@ const initialState = {
     height: DEFAULT_CHART_CELL_HEIGHT,
     lineHeight: DEFAULT_CHART_LINE_HEIGHT,
   },
+  nodeOption: "",
 };
 
 export const matrixSlice = createSlice({
@@ -104,6 +105,9 @@ export const matrixSlice = createSlice({
     setChartCellDimensions: (state, action) => {
       state.chartCellDimensions = action.payload;
     },
+    setNodeOption: (state, action) => {
+      state.nodeOption = action.payload;
+    },
   },
 });
 
@@ -118,6 +122,7 @@ export const {
   setPasteRowContent,
   setChartData,
   setChartCellDimensions,
+  setNodeOption,
 } = matrixSlice.actions;
 
 export default matrixSlice.reducer;

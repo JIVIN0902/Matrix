@@ -3,6 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useSelector } from "react-redux";
 import { ThemeProvider } from "styled-components";
+import WordCloud from "../components/Charts/Cloud/WordCloud";
 
 const Matrix = dynamic(() => import("../components/matrix/Matrix"), {
   ssr: false,
@@ -31,6 +32,8 @@ export default function Home() {
         return <OrgChart />;
       case "mindMap":
         return <MindMap />;
+      case "wordCloud":
+        return <WordCloud />;
       default:
         return <Matrix />;
     }
