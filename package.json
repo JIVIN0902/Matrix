@@ -36,6 +36,7 @@
     "next": "12.1.6",
     "nextjs-orgchart": "^1.0.8",
     "react": "18.1.0",
+    "react-d3-tree": "^3.3.2",
     "react-data-grid": "^7.0.0-beta.12",
     "react-datasheet": "^1.4.9",
     "react-dnd-html5-backend": "^16.0.1",

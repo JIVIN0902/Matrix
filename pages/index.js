@@ -4,6 +4,11 @@ import styles from "../styles/Home.module.css";
 import { useSelector } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import WordCloud from "../components/Charts/Cloud/WordCloud";
+import Chart2by2 from "../components/Charts/2by2";
+import GlobalWeights from "../components/GlobalWeights/GlobalWeights";
+import Decisions from "../components/Decisions";
+import Collateral from "../components/Collateral";
+import DecisionTree from "../components/Decisions/DecisionTree";
 
 const Matrix = dynamic(() => import("../components/matrix/Matrix"), {
   ssr: false,
@@ -34,6 +39,16 @@ export default function Home() {
         return <MindMap />;
       case "wordCloud":
         return <WordCloud />;
+      case "2by2":
+        return <Chart2by2 />;
+      case "globalWeights":
+        return <GlobalWeights />;
+      case "decisions":
+        return <Decisions />;
+      case "collateral":
+        return <Collateral />;
+      case "decisionTree":
+        return <DecisionTree />;
       default:
         return <Matrix />;
     }

@@ -1,24 +1,20 @@
 import React, { Component, useEffect, createRef, useState } from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FishboneChart from "fishbone-chart";
 import { useDispatch, useSelector } from "react-redux";
-import { setChartData } from "../../state/matrix/matrixSlice";
-import { setShowState } from "../../state/app/appSlice";
 import { useScreenshot } from "use-react-screenshot";
-
-const styles = { width: 40, height: 40, cursor: "pointer" };
+import GoBack from "../GoBack";
+import styled from "styled-components";
 
 const Fishbone = () => {
   const dispatch = useDispatch();
   const [fishboneData, setFishboneData] = useState({});
   const [image, takeScreenshot] = useScreenshot();
   const getImage = () => takeScreenshot(ref.current);
-  console.log(image);
 
   const { chartData, title } = useSelector((state) => state.matrix);
 
   const modifyData = () => {
-    data = [...chartData.slice(1)];
+    data = [...chartData];
 
     const newData = {};
     const mainData = {};
@@ -105,20 +101,17 @@ const Fishbone = () => {
 
   return (
     <>
-      <ArrowBackIcon
-        sx={styles}
-        onClick={() => {
-          dispatch(setShowState("matrix"));
-          dispatch(setChartData([]));
-        }}
-      />
+      <GoBack title="Fishbone" />
 
-      {/* <PictureAsPdfIcon sx={styles} onClick={getImage} /> */}
-      <div ref={ref}>
+      <Container ref={ref}>
         <FishboneChart data={fishboneData} />
-      </div>
+      </Container>
     </>
   );
 };
+
+const Container = styled.div`
+  margin-top: 20px;
+`;
 
 export default Fishbone;

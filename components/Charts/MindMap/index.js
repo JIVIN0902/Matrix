@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import MindElixir, { E } from "mind-elixir";
+import MindElixir from "mind-elixir";
 import { useSelector } from "react-redux";
 import shortUUID from "short-uuid";
+import GoBack from "../../GoBack";
 
 const translator = shortUUID();
 
@@ -15,7 +16,7 @@ const MindMap = () => {
         id: "root",
         topic: title,
         root: true,
-        children: chartData.slice(1).map((array, index) => {
+        children: chartData.map((array, index) => {
           return {
             id: translator.new(),
             topic: array[0][0],
@@ -61,7 +62,12 @@ const MindMap = () => {
     }
   }, [data]);
 
-  return <div id="map" style={{ height: "100vh", width: "100%" }} />;
+  return (
+    <>
+      <GoBack title="Mind Map" />
+      <div id="map" style={{ height: "93vh", width: "100%" }} />
+    </>
+  );
 };
 
 export default MindMap;

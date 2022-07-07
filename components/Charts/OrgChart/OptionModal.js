@@ -11,21 +11,30 @@ import OptionComments from "./Options/OptionComments";
 import OptionVote from "./Options/OptionVote";
 import OptionLinks from "./Options/OptionsLinks";
 import { useSelector } from "react-redux";
-import { COMMENT, FILE, LINK, VIDEO, VOTE } from "./NodeOptions";
+import {
+  COMMENT,
+  FILE,
+  IMPACT,
+  LINK,
+  RATING,
+  VIDEO,
+  VOTE,
+} from "./NodeOptions";
+import OptionImpact from "./Options/OptionImpact";
+import OptionRating from "./Options/OptionRating";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "60vw",
   bgcolor: "white",
   boxShadow: 24,
 };
 
 const OptionModal = ({ open, handleClose }) => {
   const { nodeOption } = useSelector((state) => state.matrix);
-  console.log(nodeOption);
 
   const switchOptions = () => {
     switch (nodeOption) {
@@ -39,6 +48,10 @@ const OptionModal = ({ open, handleClose }) => {
         return <OptionVote handleClose={handleClose} />;
       case LINK:
         return <OptionLinks handleClose={handleClose} />;
+      case IMPACT:
+        return <OptionImpact handleClose={handleClose} />;
+      case RATING:
+        return <OptionRating handleClose={handleClose} />;
       default:
         return "";
     }

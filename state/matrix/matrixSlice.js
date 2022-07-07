@@ -5,6 +5,11 @@ import {
   DEFAULT_CHART_LINE_HEIGHT,
   DEFAULT_COL_WIDTH,
 } from "../../constants";
+import rows from "../../public/data.json";
+
+function getValue(params, field) {
+  return params?.row[field]?.value;
+}
 
 const initialState = {
   columns: [
@@ -22,6 +27,8 @@ const initialState = {
       cellClassName: "col-a",
       headerClassName: "col-a",
       resizable: true,
+      valueGetter: (params) => getValue(params, "a"),
+      groupingValueGetter: (params) => getValue(params, "a"),
     },
     {
       field: "b",
@@ -30,6 +37,8 @@ const initialState = {
       editable: true,
       cellClassName: "col-b",
       headerClassName: "col-b",
+      valueGetter: (params) => getValue(params, "b"),
+      groupingValueGetter: (params) => getValue(params, "b"),
     },
     {
       field: "c",
@@ -37,41 +46,33 @@ const initialState = {
       // type: "number",
       width: DEFAULT_COL_WIDTH,
       editable: true,
+      valueGetter: (params) => getValue(params, "c"),
     },
   ],
   originalData: [],
   skipPcReset: false,
   selectedColumn: {},
   title: "",
-  rows: [
-    { id: 0, a: "First Name", b: "Last Name", c: "Age" },
-    { id: 1, b: "Lannister", a: "Cersei", c: 42 },
-    { id: 2, b: "Lannister", a: "Jaime", c: 45 },
-    { id: 3, b: "Stark", a: "Arya", c: 16 },
-    { id: 4, b: "Targaryen", a: "Daenerys", c: null },
-    { id: 5, b: "Melisandre", a: "Lady", c: 150 },
-    { id: 6, b: "Clifford", a: "Ferrara", c: 44 },
-    { id: 7, b: "Frances", a: "Rossini", c: 36 },
-    { id: 8, b: "Roxie", a: "Harvey", c: 65 },
-    { id: 9, b: "Snow", a: "Jon", c: 35 },
-    { id: 10, b: "Lannister", a: "Cersei", c: 42 },
-    { id: 11, b: "Lannister", a: "Jaime", c: 45 },
-    { id: 12, b: "Stark", a: "Arya", c: 16 },
-    { id: 13, b: "Targaryen", a: "Daenerys", c: null },
-    { id: 14, b: "Melisandre", a: "Lady", c: 150 },
-    { id: 15, b: "Clifford", a: "Ferrara", c: 44 },
-    { id: 16, b: "Frances", a: "Rossini", c: 36 },
-    { id: 17, b: "Roxie", a: "Harvey", c: 65 },
-  ],
+  rows,
   pasteColumnContent: {},
   pasteRowContent: {},
   chartData: [],
+  orgChartData: [],
   chartCellDimensions: {
     width: DEFAULT_CHART_CELL_WIDTH,
     height: DEFAULT_CHART_CELL_HEIGHT,
     lineHeight: DEFAULT_CHART_LINE_HEIGHT,
   },
   nodeOption: "",
+  framework: "Framework",
+  weights: {
+    cost: 0,
+    time: 0,
+    resources: 0,
+    intangibles: 0,
+    total: 0,
+  },
+  rowSelection: {},
 };
 
 export const matrixSlice = createSlice({
@@ -102,16 +103,27 @@ export const matrixSlice = createSlice({
     setChartData: (state, action) => {
       state.chartData = action.payload;
     },
+    setOrgChartData: (state, action) => {
+      state.orgChartData = action.payload;
+    },
     setChartCellDimensions: (state, action) => {
       state.chartCellDimensions = action.payload;
     },
     setNodeOption: (state, action) => {
       state.nodeOption = action.payload;
     },
+    setFramework: (state, action) => {
+      state.framework = action.payload;
+    },
+    setWeights: (state, action) => {
+      state.weights = action.payload;
+    },
+    setRowSelection: (state, action) => {
+      state.rowSelection = action.payload;
+    },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const {
   setColumns,
   setRows,
@@ -123,6 +135,10 @@ export const {
   setChartData,
   setChartCellDimensions,
   setNodeOption,
+  setFramework,
+  setWeights,
+  setOrgChartData,
+  setRowSelection,
 } = matrixSlice.actions;
 
 export default matrixSlice.reducer;

@@ -1,53 +1,576 @@
-{
-  "name": "Quality",
-  "children": [
-    {
-      "name": "Machine",
-      "children": [
-        { "name": "Mill" },
-        { "name": "Mixer" },
-        { "name": "Metal Lathe" }
-      ]
+[
+  {
+    "id": 0,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "First Name",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
     },
-    { "name": "Method" },
-    {
-      "name": "Material",
-      "children": [
-        { "name": "Masonite" },
-        {
-          "name": "Marscapone",
-          "children": [
-            { "name": "Malty" },
-            {
-              "name": "Minty",
-              "children": [{ "name": "spearMint" }, { "name": "pepperMint" }]
-            }
-          ]
-        },
-        { "name": "Meat", "children": [{ "name": "Mutton" }] }
-      ]
+    "b": {
+      "value": "Last Name",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
     },
-    {
-      "name": "Man Power",
-      "children": [
-        { "name": "Manager" },
-        { "name": "Master's Student" },
-        { "name": "Magician" },
-        { "name": "Miner" },
-        { "name": "Magister", "children": [{ "name": "Malpractice" }] },
-        {
-          "name": "Massage Artist",
-          "children": [{ "name": "Masseur" }, { "name": "Masseuse" }]
-        }
-      ]
-    },
-    {
-      "name": "Measurement",
-      "children": [{ "name": "Malleability" }]
-    },
-    {
-      "name": "Milieu",
-      "children": [{ "name": "Marine" }]
+    "c": {
+      "value": "Age",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
     }
-  ]
-}
+  },
+  {
+    "id": 1,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Cersei",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Lannister",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "42",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 2,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Jaime",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Lannister",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "45",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 3,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Arya",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Stark",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "16",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 4,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Daenerys",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Targaryen",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 5,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Lady",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Melisandre",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "150",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 6,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Ferrara",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Clifford",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "44",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 7,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Rossini",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Frances",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "36",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 8,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Harvey",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Roxie",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "65",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 9,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Jon",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Snow",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "35",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 10,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Cersei",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Lannister",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "42",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 11,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Jaime",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Lannister",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "45",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 12,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Arya",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Stark",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "16",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 13,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Daenerys",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Targaryen",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 14,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Lady",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Melisandre",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "150",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 15,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Ferrara",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Clifford",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "44",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 16,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Rossini",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Frances",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "36",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  },
+  {
+    "id": 17,
+    "editable": true,
+    "editedCols": [],
+    "a": {
+      "value": "Harvey",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "b": {
+      "value": "Roxie",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    },
+    "c": {
+      "value": "65",
+      "video": null,
+      "file": null,
+      "comment": "",
+      "link": "",
+      "votes": { "up": 0, "down": 0 },
+      "impact": 0
+    }
+  }
+]

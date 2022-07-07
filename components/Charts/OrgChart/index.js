@@ -1,528 +1,59 @@
-// import React, { useEffect, useRef } from "react";
-// import styled from "styled-components";
-// import { Tree, TreeNode } from "react-organizational-chart";
-// import { useDispatch, useSelector } from "react-redux";
-// import ZoomInIcon from "@mui/icons-material/ZoomIn";
-// import ZoomOutIcon from "@mui/icons-material/ZoomOut";
-// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-// import {
-//   setChartCellDimensions,
-//   setChartData,
-// } from "../../../state/matrix/matrixSlice";
-// import { ArrowDropDown } from "@mui/icons-material";
-// import { setShowState } from "../../../state/app/appSlice";
-// import Node from "./Node";
-// import { useReactToPrint } from "react-to-print";
-
-// const styles = { width: 40, height: 40, cursor: "pointer" };
-
-// const OrgChart = () => {
-//   const { chartData, chartCellDimensions, title } = useSelector(
-//     (state) => state.matrix
-//   );
-
-//   console.log(chartData);
-
-//   const dispatch = useDispatch();
-//   let { width, height, lineHeight } = chartCellDimensions;
-
-//   const zoom = (direction) => {
-//     if (direction === 1 && width < 500) {
-//       dispatch(
-//         setChartCellDimensions({
-//           width: width + 50,
-//           lineHeight: lineHeight + 10,
-//           height: height + 10,
-//         })
-//       );
-//     } else if (direction === -1 && width > 50) {
-//       dispatch(
-//         setChartCellDimensions({
-//           lineHeight: lineHeight > 20 ? lineHeight - 10 : lineHeight,
-//           width: width - 50,
-//           height: height - 10,
-//         })
-//       );
-//     }
-//   };
-//   const ref = useRef();
-//   const handlePrint = useReactToPrint({
-//     content: () => ref.current,
-//   });
-
-//   return (
-//     <Container>
-//       <ChartToolbar>
-//         <ArrowBackIcon
-//           sx={styles}
-//           onClick={() => {
-//             dispatch(setShowState("matrix"));
-//             dispatch(setChartData([]));
-//           }}
-//         />
-//         <ZoomInIcon sx={styles} onClick={() => zoom(1)} />
-//         <ZoomOutIcon sx={styles} onClick={() => zoom(-1)} />
-//         <button onClick={handlePrint}>Generate pdf</button>
-//       </ChartToolbar>
-//       <Chart ref={ref}>
-//         <Tree
-//           lineWidth={"2px"}
-//           lineColor={"green"}
-//           lineHeight={`${lineHeight}px`}
-//           lineBorderRadius={"10px"}
-//           label={<StyledNode>{title}</StyledNode>}
-//         >
-//           {chartData?.orgChart?.slice(1).map((node, index) => (
-//             <Node key={index} node={node} />
-//           ))}
-//         </Tree>
-//       </Chart>
-//     </Container>
-//   );
-// };
-
-// export default OrgChart;
-
-// const StyledNode = styled.div`
-//   padding: 5px;
-//   border-radius: 8px;
-//   display: inline-block;
-//   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-//   min-width: ${(props) => props.theme.chartCellWidth}px;
-//   min-height: ${(props) => props.theme.chartCellHeight}px;
-//   background: #eee;
-// `;
-
-// const Container = styled.div`
-//   display: flex;
-// `;
-
-// const ChartToolbar = styled.div`
-//   position: fixed;
-//   display: flex;
-//   width: 100vw;
-// `;
-// const Chart = styled.div`
-//   margin-top: 50px;
-//   margin-left: auto;
-//   margin-right: auto;
-// `;
-// import React, { useState, useEffect } from "react";
-// import { OrgChartComponent } from "./Chart";
-// import * as d3 from "d3";
-// import { useSelector } from "react-redux";
-// import short from "short-uuid";
-
-// const styles = { width: 40, height: 40, cursor: "pointer" };
-
-// const translator = short();
-// const App = () => {
-//   const [data, setData] = useState(null);
-//   const { chartData, title } = useSelector((state) => state.matrix);
-//   let addNodeChildFunc = null;
-
-//   function onNodeClick(nodeId) {
-//     console.log("d3", d3.event);
-//     // alert("clicked " + nodeId);
-//   }
-
-//   useEffect(() => {
-//     modifyOrgChartData();
-//   }, []);
-
-//   const modifyOrgChartData = () => {
-//     const modifiedData = [];
-//     const titleRow = {
-//       id: "title",
-//       parentId: "",
-//       _directSubordinates: chartData.slice(1).length,
-//       value: title,
-//     };
-//     modifiedData.push(titleRow);
-//     chartData.slice(1).map((array, index) => {
-//       const categoryRow = {
-//         id: translator.new(),
-//         parentId: "title",
-//         _directSubordinates: array.length,
-//         value: array[0][0],
-//       };
-//       modifiedData.push(categoryRow);
-//       array.map((subArray, idx) => {
-//         const causeRow = {
-//           parentId: categoryRow.id,
-//           id: translator.new(),
-//           value: subArray[1],
-//           _directSubordinates: subArray.slice(2).length,
-//         };
-
-//         modifiedData.push(causeRow);
-//         const ideasRows = subArray.slice(2).map((value, i) => ({
-//           id: translator.new(),
-//           parentId: causeRow.id,
-//           value,
-//           _directSubordinates: 0,
-//         }));
-//         modifiedData.push(...ideasRows);
-//       });
-//     });
-//     setData(modifiedData);
-//   };
-
-//   return (
-//     <div>
-//       <OrgChartComponent
-//         setClick={(click) => (addNodeChildFunc = click)}
-//         onNodeClick={onNodeClick}
-//         data={data}
-//       />
-//     </div>
-//   );
-// };
-
-// export default App;
-
-// import React, { useState, useEffect } from "react";
-
-// import styled from "styled-components";
-// import { OrgChartComponent } from "./Chart";
-// import * as d3 from "d3";
-// import { useDispatch, useSelector } from "react-redux";
-// import shortUUID from "short-uuid";
-// import NodeOptions from "./NodeOptions";
-// import OptionModal from "./OptionModal";
-// import { ArrowBack } from "@mui/icons-material";
-// import { setShowState } from "../../../state/app/appSlice";
-// import { setChartData } from "../../../state/matrix/matrixSlice";
-
-// const translator = shortUUID();
-
-// const OrgChart = () => {
-//   const [data, setData] = useState(null);
-//   const [open, setOpen] = useState(false);
-//   const [optionOpen, setOptionOpen] = useState(false);
-//   const [option, setOption] = useState("");
-//   let addNodeChildFunc = null;
-//   const { chartData, title } = useSelector((state) => state.matrix);
-
-//   function addNode() {
-//     const node = {
-//       nodeId: "testtt",
-//       parentNodeId: "O-1",
-//       width: 330,
-//       height: 147,
-//       borderWidth: 1,
-//       borderRadius: 5,
-//       nodeImage: {
-//         url: "https://raw.githubusercontent.com/bumbeishvili/Assets/master/Projects/D3/Organization%20Chart/general.jpg",
-//         width: 100,
-//         height: 100,
-//         centerTopDistance: 0,
-//         centerLeftDistance: 0,
-//         cornerShape: "ROUNDED",
-//         shadow: true,
-//         borderWidth: 0,
-//       },
-//       nodeIcon: {
-//         icon: "https://to.ly/1yZnX",
-//         size: 30,
-//       },
-//       connectorLineColor: {
-//         red: 220,
-//         green: 189,
-//         blue: 207,
-//         alpha: 1,
-//       },
-//       connectorLineWidth: 1,
-//       dashArray: "",
-//       expanded: false,
-//       template: `<div>
-//                   <div style="margin-left:80px;
-//                               margin-top:10px;
-//                               font-size:20px;
-//                               font-weight:bold;
-//                          ">Added Root Child </div>
-//                  <div style="margin-left:80px;
-//                               margin-top:3px;
-//                               font-size:16px;
-//                          ">Added position </div>
-
-//                  <div style="margin-left:80px;
-//                               margin-top:3px;
-//                               font-size:14px;
-//                          ">Added unit</div>
-
-//                  <div style="margin-left:200px;
-//                              margin-top:15px;
-//                              font-size:13px;
-//                              position:absolute;
-//                              bottom:5px;
-//                             ">
-//                       <div>Added office</div>
-//                       <div style="margin-top:5px">Added area</div>
-//                  </div>
-//               </div>`,
-//     };
-
-//     addNodeChildFunc(node);
-//   }
-
-//   function onNodeClick(nodeId) {
-//     console.log("d3", d3.event);
-//     setOpen(true);
-//     // alert("clicked " + nodeId);
-//   }
-
-//   const defaults = {
-//     width: 330,
-//     height: 147,
-//     borderWidth: 1,
-//     borderRadius: 5,
-//     nodeIcon: {
-//       icon: "https://to.ly/1yZnX",
-//       size: 30,
-//     },
-//     connectorLineColor: {
-//       red: 0,
-//       green: 0,
-//       blue: 0,
-//       alpha: 1,
-//     },
-//     connectorLineWidth: 1,
-//     dashArray: "",
-//     expanded: false,
-//   };
-
-//   const dispatch = useDispatch();
-
-//   const template = (title, children) => {
-//     return `<div style="display:flex;justify-content:center;
-//               flex-direction:column;
-//              align-items:center;
-//              background-color:whitesmoke;
-//              width:100%;
-//              height: 100%">
-//                   <div style="font-size:20px;
-//                               font-weight:bold;
-//                               color:black;
-//                          ">${title}</div>
-//                   <div style="margin-top:3px;
-//                               color:black;
-//                               font-size:16px;
-//                          ">Added position </div>
-//               </div>`;
-//   };
-
-//   const modifyOrgChartData = () => {
-//     const modifiedData = [];
-//     const titleRow = {
-//       ...defaults,
-//       nodeId: "title",
-//       parentNodeId: "",
-//       _directSubordinates: chartData.slice(1).length,
-//       value: title,
-//       template: template(title),
-//     };
-//     modifiedData.push(titleRow);
-//     chartData.slice(1).map((array, index) => {
-//       const categoryRow = {
-//         ...defaults,
-//         nodeId: translator.new(),
-//         parentNodeId: "title",
-//         directSubordinates: array.length,
-//         value: array[0][0],
-//         template: template(array[0][0]),
-//       };
-//       modifiedData.push(categoryRow);
-//       array.map((subArray, idx) => {
-//         const causeRow = {
-//           ...defaults,
-//           parentNodeId: categoryRow.nodeId,
-//           nodeId: translator.new(),
-//           value: subArray[1],
-//           _directSubordinates: subArray.slice(2).length,
-//           template: template(subArray[1]),
-//         };
-
-//         modifiedData.push(causeRow);
-//         const ideasRows = subArray.slice(2).map((value, i) => ({
-//           ...defaults,
-//           nodeId: translator.new(),
-//           parentNodeId: causeRow.nodeId,
-//           value,
-//           _directSubordinates: 0,
-//           template: template(value),
-//         }));
-//         modifiedData.push(...ideasRows);
-//       });
-//     });
-//     setData(modifiedData);
-//     console.log(modifiedData);
-//   };
-
-//   useEffect(() => {
-//     // d3.json(
-//     //   "https://gist.githubusercontent.com/bumbeishvili/dc0d47bc95ef359fdc75b63cd65edaf2/raw/c33a3a1ef4ba927e3e92b81600c8c6ada345c64b/orgChart.json"
-//     // ).then((data) => {
-//     //   setData(data);
-//     //   console.log(data);
-//     // });
-//     modifyOrgChartData();
-//   }, [true]);
-
-//   return (
-//     <Chart>
-//       <ArrowBack
-//         sx={{ cursor: "pointer" }}
-//         fontSize="large"
-//         onClick={() => {
-//           dispatch(setShowState("matrix"));
-//           dispatch(setChartData([]));
-//         }}
-//       />
-//       <OrgChartComponent
-//         setClick={(click) => (addNodeChildFunc = click)}
-//         onNodeClick={onNodeClick}
-//         data={data}
-//       />
-//       <NodeOptions
-//         setOption={setOption}
-//         setOptionOpen={setOptionOpen}
-//         handleClose={() => setOpen(false)}
-//         open={open}
-//       />
-//       <OptionModal open={optionOpen} handleClose={() => setOptionOpen(false)} />
-//     </Chart>
-//   );
-// };
-
-// export default OrgChart;
-
-// const Chart = styled.div`
-//   height: 100vh !important;
-// `;
-
-// import React from "react";
-// import OrganizationChart from "nextjs-orgchart";
-
-// const PanZoomChart = () => {
-//   const ds = {
-//     name: "Lao Lao",
-//     title: "general manager",
-//     verticalLevel: 3,
-//     visibleLevel: 4,
-//     children: [
-//       { name: "Bo Miao", title: "department manager" },
-//       {
-//         name: "Su Miao",
-//         title: "department manager",
-//         children: [
-//           { name: "Tie Hua", title: "senior engineer" },
-//           {
-//             name: "Hei Hei",
-//             title: "senior engineer",
-//             children: [
-//               { name: "Pang Pang", title: "engineer" },
-//               {
-//                 name: "Xiang Xiang",
-//                 title: "UE engineer",
-//                 children: [
-//                   { name: "Dan Dan", title: "engineer" },
-//                   {
-//                     name: "Er Dan",
-//                     title: "engineer",
-//                     children: [
-//                       { name: "Xuan Xuan", title: "intern" },
-//                       { name: "Er Xuan", title: "intern" },
-//                     ],
-//                   },
-//                 ],
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//       { name: "Hong Miao", title: "department manager" },
-//       {
-//         name: "Chun Miao",
-//         title: "department manager",
-//         children: [
-//           { name: "Bing Qin", title: "senior engineer" },
-//           {
-//             name: "Yue Yue",
-//             title: "senior engineer",
-//             children: [
-//               { name: "Er Yue", title: "engineer" },
-//               { name: "San Yue", title: "UE engineer" },
-//             ],
-//           },
-//         ],
-//       },
-//     ],
-//   };
-//   return (
-//     <OrganizationChart
-//       verticalLevel={3}
-//       datasource={ds}
-//       pan={true}
-//       zoom={true}
-//     />
-//   );
-// };
-
-// export default PanZoomChart;
-
 import OrgChart from "@balkangraph/orgchart.js";
-import { ArrowBack } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import short from "short-uuid";
-import { setShowState } from "../../../state/app/appSlice";
-import { setChartData } from "../../../state/matrix/matrixSlice";
-
-const styles = { width: 40, height: 40, cursor: "pointer" };
+import { setRows, setRowSelection } from "../../../state/matrix/matrixSlice";
+import GoBack from "../../GoBack";
+import NodeOptions from "./NodeOptions";
+import OptionModal from "./OptionModal";
 
 const translator = short();
 const Chart = () => {
   const [data, setData] = useState();
+  const [optionsOpen, setOptionsOpen] = useState({
+    open: false,
+    isIdea: false,
+  });
+  const [optionModalOpen, setOptionModalOpen] = useState(false);
   const [chart, setChart] = useState();
-  const { title, chartData } = useSelector((state) => state.matrix);
+  const { title, rows, orgChartData } = useSelector((state) => state.matrix);
+  const dispatch = useDispatch();
 
   const modifyOrgChartData = () => {
     const modifiedData = [];
     const titleRow = {
       id: "title",
       name: title,
-      children: `${chartData.slice(1).length} children`,
+      children: `${orgChartData.length} children`,
     };
     modifiedData.push(titleRow);
-    chartData.slice(1).map((array, index) => {
+    orgChartData.map((array, index) => {
       const categoryRow = {
-        id: translator.new(),
+        id: `${translator.new()}-${array[0][0].rowId}`,
         pid: "title",
-        name: array[0][0],
+        name: array[0][0].value,
         children: `${array.length} children`,
       };
       modifiedData.push(categoryRow);
       array.map((subArray, idx) => {
         const causeRow = {
           pid: categoryRow.id,
-          id: translator.new(),
-          name: subArray[1],
+          id: `${translator.new()}-${subArray[1].rowId}-${subArray[1].col}`,
+          name: subArray[1].value,
           children: `${subArray.slice(2).length} children`,
         };
 
         modifiedData.push(causeRow);
-        const ideasRows = subArray.slice(2).map((value, i) => ({
-          id: translator.new(),
+        const ideasRows = subArray.slice(2).map((obj, i) => ({
+          id: `${translator.new()}-${obj.rowId}-${obj.col}`,
           pid: causeRow.id,
-          name: value,
+          name: obj.value,
         }));
         modifiedData.push(...ideasRows);
       });
     });
     setData(modifiedData);
   };
-  const dispatch = useDispatch();
 
   function pdf(nodeId) {
     chart.exportPDF({
@@ -531,6 +62,7 @@ const Chart = () => {
       nodeId: nodeId,
     });
   }
+
   function png(nodeId) {
     chart.exportPNG({
       filename: "MyFileName.png",
@@ -538,6 +70,7 @@ const Chart = () => {
       nodeId: nodeId,
     });
   }
+
   function svg(nodeId) {
     chart.exportSVG({
       filename: "MyFileName.svg",
@@ -581,20 +114,59 @@ const Chart = () => {
           },
         },
       });
+
+      OrgChart.templates.rony.field_0 = `
+      <foreignObject x="10" y="10" width="160" height="150">
+          <div style="text-align:center;color:blue;" xmlns="http://www.w3.org/1999/xhtml">
+            {val}
+          </div>
+      </foreignObject>
+          `;
+
+      OrgChart.templates.rony.field_1 = `
+        <text style="font-size: 24px;" fill="orange" width="fit-content" height="fit-content" x="90" y="200" text-anchor="middle">{val}</text>
+        `;
+
       setChart(chart);
     }
   }, [data]);
 
+  chart?.on("click", (sender, args) => {
+    const id = parseInt(args.node.id.split("-")[1]);
+    const col = args.node.id.split("-")[2];
+
+    const selection = {
+      ...rows[id],
+      col: col,
+      id: id,
+    };
+
+    dispatch(setRowSelection(selection));
+
+    setOptionsOpen({ open: true, isIdea: col >= "c" });
+    // sender.editUI.show(args.node.id, false);
+    // sender.editUI.show(args.node.id, true);  details mode
+    return false; //to cansel the click event
+  });
+
+  useEffect(() => {
+    // console.log(rows);
+  }, [rows]);
+
   return (
     <>
-      <ArrowBack
-        sx={styles}
-        onClick={() => {
-          dispatch(setShowState("matrix"));
-          dispatch(setChartData([]));
-        }}
-      />
+      <GoBack title="Org Chart" />
       <div style={{ width: "100vw", height: "100vh" }} id="tree"></div>
+      <NodeOptions
+        open={optionsOpen.open}
+        setOptionModalOpen={setOptionModalOpen}
+        handleClose={() => setOptionsOpen({ open: false, isIdea: false })}
+        isIdea={optionsOpen.isIdea}
+      />
+      <OptionModal
+        open={optionModalOpen}
+        handleClose={() => setOptionModalOpen(false)}
+      />
     </>
   );
 };

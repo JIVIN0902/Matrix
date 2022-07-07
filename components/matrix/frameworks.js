@@ -309,7 +309,7 @@ const frameworks = {
       "KPI07",
     ],
   ],
-  Unknown: [
+  "2 by 2": [
     ["Effect", "Cause", "Example 01", "Example 02"],
     ["Known-Effect", "Known-Cause", "No. Of Orders", "Type Of Product Sold"],
     [

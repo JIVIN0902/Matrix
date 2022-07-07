@@ -14,7 +14,7 @@ import { setRows } from "../../state/matrix/matrixSlice";
 import { setShowState } from "../../state/app/appSlice";
 
 const Toolbar = ({ rowGroupingModelStr, readExcelFile, groupRows }) => {
-  const { rows, title } = useSelector((state) => state.matrix);
+  const { rows, title, framework } = useSelector((state) => state.matrix);
 
   const dispatch = useDispatch();
 
@@ -77,6 +77,34 @@ const Toolbar = ({ rowGroupingModelStr, readExcelFile, groupRows }) => {
           onClick={() => dispatch(setShowState("wordCloud"))}
           variant="outlined"
         />
+        <Chip
+          label="Global Weights"
+          onClick={() => dispatch(setShowState("globalWeights"))}
+          variant="outlined"
+        />
+        <Chip
+          label="Decisions"
+          onClick={() => dispatch(setShowState("decisions"))}
+          variant="outlined"
+        />
+        <Chip
+          label="Decision Tree"
+          onClick={() => dispatch(setShowState("decisionTree"))}
+          variant="outlined"
+        />
+        <Chip
+          label="Collateral"
+          onClick={() => dispatch(setShowState("collateral"))}
+          variant="outlined"
+        />
+
+        {framework === "2 by 2" && (
+          <Chip
+            label="2 by 2"
+            onClick={() => dispatch(setShowState("2by2"))}
+            variant="outlined"
+          />
+        )}
       </Stack>
       <GridToolbarColumnsButton />
       <GridToolbarFilterButton />

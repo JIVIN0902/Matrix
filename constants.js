@@ -1,4 +1,5 @@
 export const DEFAULT_COL_WIDTH = 300;
+export const DECISIONS_COL_WIDTH = 170;
 export let DEFAULT_CHART_CELL_WIDTH = 100;
 export let DEFAULT_CHART_CELL_HEIGHT = 20;
 export let DEFAULT_CHART_LINE_HEIGHT = 30;

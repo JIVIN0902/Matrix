@@ -6,7 +6,9 @@ import readXlsxFile from "read-excel-file";
 import {
   setChartData,
   setColumns,
+  setOrgChartData,
   setRows,
+  setRowSelection,
   setTitle,
 } from "../../state/matrix/matrixSlice";
 import { LicenseInfo } from "@mui/x-license-pro";
@@ -26,12 +28,14 @@ LicenseInfo.setLicenseKey(
 );
 
 export default function Matrix() {
-  const { rows, columns, chartData } = useSelector((state) => state.matrix);
+  const { rows, columns, chartData, framework } = useSelector(
+    (state) => state.matrix
+  );
   const [selectedRow, setSelectedRow] = React.useState();
   const [contextMenu, setContextMenu] = React.useState(null);
-  const [framework, setFramework] = React.useState("Framework");
   const [rowGroupingModel, setRowGroupingModel] = React.useState([""]);
   const [isGrouped, setIsGrouped] = React.useState(false);
+  const [mapData, setMapData] = React.useState({});
   const dispatch = useDispatch();
 
   const rowGroupingModelStr = rowGroupingModel.join("-");
@@ -40,60 +44,65 @@ export default function Matrix() {
     setContextMenu(null);
   };
 
-  const modifyRows = (rows, isFramework) => {
-    let headerName = "";
-    if (isFramework) {
-      headerName = "A";
-    } else {
-      headerName = "D";
-    }
-    let newCols = [];
+  function getValue(params, field) {
+    return params?.row[field]?.value;
+  }
+
+  const modifyRows = (rows) => {
+    let headerName = "A";
+    let newCols = [
+      {
+        field: "id",
+        headerName: "S No.",
+        width: 90,
+        disableExport: true,
+      },
+    ];
     let newCol = {
       width: DEFAULT_COL_WIDTH,
       editable: true,
     };
-    if (!isFramework) {
-      rows[0].map((value, index) => {
-        if (index > 3) {
-          newCol = {
-            ...newCol,
-            field: headerName.toLowerCase(),
-            headerName: headerName,
-          };
-          newCols.push(newCol);
-          headerName = incrementString(headerName);
-        }
-      });
-
-      dispatch(setColumns([...columns, ...newCols]));
-    } else {
-      const cols = [
-        {
-          field: "id",
-          headerName: "S No.",
-          width: 90,
-          disableExport: true,
-        },
-      ];
-
-      rows[0].map((value, index) => {
-        const nc = {
+    rows[0].map((value, index) => {
+      const field = headerName.toLowerCase();
+      if (index < 2) {
+        newCol = {
           ...newCol,
-          field: headerName.toLowerCase(),
+          field,
           headerName: headerName,
+          valueGetter: (params) => getValue(params, field),
+          groupingValueGetter: (params) => getValue(params, field),
         };
-        headerName = incrementString(headerName);
-        cols.push(nc);
-      });
+      } else {
+        newCol = {
+          ...newCol,
+          field,
+          headerName: headerName,
+          valueGetter: (params) => getValue(params, field),
+        };
+      }
+      headerName = incrementString(headerName);
+      newCols.push(newCol);
+    });
 
-      dispatch(setColumns([...cols]));
-    }
+    dispatch(setColumns(newCols));
 
     const modifiedRows = rows.map((row, index) => {
       let field = "a";
-      let newRow = { id: index, editable: true };
+      let newRow = {
+        id: index,
+        editable: true,
+        editedCols: [],
+      };
       row.map((value) => {
-        newRow[field] = value?.toString();
+        newRow[field] = {
+          value: value?.toString(),
+          video: null,
+          file: null,
+          comment: "",
+          link: "",
+          votes: { up: 0, down: 0 },
+          impact: 0,
+        };
         field = incrementString(field).toLowerCase();
       });
       return newRow;
@@ -137,7 +146,10 @@ export default function Matrix() {
   const changeRows = (e) => {
     const before = rows.slice(0, e.id);
     const after = rows.slice(e.id + 1);
-    const newRow = { ...rows[e.id], [e.field]: e.value };
+    const newRow = {
+      ...rows[e.id],
+      [e.field]: { ...rows[e.id][e.field], value: e.value },
+    };
     dispatch(setRows([...before, newRow, ...after]));
   };
 
@@ -169,15 +181,8 @@ export default function Matrix() {
     }
   };
 
-  React.useEffect(() => {
-    if (framework !== "Framework" && frameworks[framework]) {
-      modifyRows(frameworks[framework], true);
-    }
-  }, [framework]);
-
   const updateGroupingData = (data) => {
-    console.log(data);
-    const keys = Object.keys(data.rows.tree);
+    let keys = Object.keys(data.rows.tree);
     keys = keys.filter((key) => key.includes("auto-generated-row"));
 
     const mapData = {};
@@ -193,19 +198,32 @@ export default function Matrix() {
     });
 
     if (mapData && Object.keys(mapData).length > 0 && chartData.length === 0) {
-      dispatch(setChartData(modifyChartData(mapData)));
+      setMapData(mapData);
+      dispatch(setChartData(modifyChartData(mapData).slice(1)));
+      dispatch(setOrgChartData(modifyChartData(mapData, true).slice(1)));
     }
   };
 
-  const modifyChartData = (chartData) => {
+  const modifyChartData = (chartData, isOrgChart) => {
     const nodes = Object.keys(chartData).map((key) => {
       const node = chartData[key];
       const nodeData = node.map((subNode) => {
         const keys = Object.keys(subNode).filter(
           (val) => val !== "id" && val !== "editable"
         );
-        const values = keys.map((key) => {
-          return subNode[key];
+        const values = [];
+        keys.map((key) => {
+          if (isOrgChart) {
+            if (subNode[key].value) {
+              values.push({
+                value: subNode[key].value,
+                rowId: subNode.id,
+                col: key,
+              });
+            }
+          } else if (!isOrgChart) {
+            values.push(subNode[key].value);
+          }
         });
         return values;
       });
@@ -214,20 +232,31 @@ export default function Matrix() {
     return nodes;
   };
 
+  const changeGroups = (newData) => {
+    const newMapData = {};
+    newData.map((value) => {
+      const split = value.split("/");
+      const key = split[split.length - 1];
+      newMapData[key] = mapData[key];
+    });
+    dispatch(setChartData(modifyChartData(newMapData)));
+  };
+
   React.useEffect(() => {
     dispatch(setColumns(changeColumnColors(columns)));
   }, []);
 
   return (
     <div style={{ height: "100vh", width: "100%" }}>
-      <TitleRow framework={framework} setFramework={setFramework} />
+      <TitleRow />
       <DataGridPremium
         rows={rows}
-        checkboxSelection
+        checkboxSelection={isGrouped}
         columns={columns}
         apiRef={apiRef}
-        onStateChange={updateGroupingData}
+        onStateChange={(data) => updateGroupingData(data, false)}
         disableSelectionOnClick
+        onSelectionModelChange={(data) => changeGroups(data, true)}
         groupingColDef={groupingColDef}
         rowGroupingModel={rowGroupingModel}
         components={{

@@ -1,22 +1,24 @@
 import { Modal, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import MessageIcon from "@mui/icons-material/Message";
+import FlagIcon from "@mui/icons-material/Flag";
+import StarIcon from "@mui/icons-material/Star";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import LinkIcon from "@mui/icons-material/Link";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { setNodeOption } from "../../../state/matrix/matrixSlice";
+import { setNodeOption, setRows } from "../../../state/matrix/matrixSlice";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "60vw",
   bgcolor: "white",
   border: "2px solid #000",
   //   boxShadow: 24,
@@ -29,12 +31,32 @@ export const FILE = "file";
 export const COMMENT = "comment";
 export const VOTE = "vote";
 export const LINK = "link";
+export const IMPACT = "impact";
+export const RATING = "rating";
 
-const NodeOptions = ({ open, handleClose, setOptionOpen }) => {
+const NodeOptions = ({ open, handleClose, setOptionModalOpen, isIdea }) => {
   const dispatch = useDispatch();
+  const { rowSelection, rows } = useSelector((state) => state.matrix);
+
+  useEffect(() => {
+    dispatch(
+      setRows(
+        rows.map((row) => {
+          if (row.id === rowSelection.id) {
+            const newRow = {
+              ...rowSelection,
+              editedCols: [...new Set([...row.editedCols, rowSelection.col])],
+            };
+            return newRow;
+          }
+          return row;
+        })
+      )
+    );
+  }, [rowSelection]);
 
   const handleOption = (name) => {
-    setOptionOpen(true);
+    setOptionModalOpen(true);
     dispatch(setNodeOption(name));
   };
   return (
@@ -56,8 +78,14 @@ const NodeOptions = ({ open, handleClose, setOptionOpen }) => {
             <VideocamIcon onClick={() => handleOption(VIDEO)} />
             <InsertDriveFileIcon onClick={() => handleOption(FILE)} />
             <MessageIcon onClick={() => handleOption(COMMENT)} />
-            <ThumbUpIcon onClick={() => handleOption(VOTE)} />
             <LinkIcon onClick={() => handleOption(LINK)} />
+            {isIdea && (
+              <>
+                <FlagIcon onClick={() => handleOption(IMPACT)} />
+                <StarIcon onClick={() => handleOption(RATING)} />
+                <ThumbUpIcon onClick={() => handleOption(VOTE)} />
+              </>
+            )}
           </OptionBox>
         </Box>
       </Modal>

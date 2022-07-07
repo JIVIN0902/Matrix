@@ -2,20 +2,15 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactWordCloud from "react-wordcloud";
-import { ArrowBack } from "@mui/icons-material";
-import { setShowState } from "../../../state/app/appSlice";
-import { setChartData } from "../../../state/matrix/matrixSlice";
-
-const styles = { width: 40, height: 40, cursor: "pointer" };
+import GoBack from "../../GoBack";
 
 const WordCloud = () => {
   const { chartData } = useSelector((state) => state.matrix);
   const [words, setWords] = useState();
-  const dispatch = useDispatch();
 
   const modifyChartData = () => {
     const newData = [];
-    chartData.slice(1).map((array) => {
+    chartData.map((array) => {
       array.map((subArray) => {
         subArray.slice(2).map((value) => {
           newData.push({
@@ -41,13 +36,7 @@ const WordCloud = () => {
 
   return (
     <Container>
-      <ArrowBack
-        sx={styles}
-        onClick={() => {
-          dispatch(setShowState("matrix"));
-          dispatch(setChartData([]));
-        }}
-      />
+      <GoBack title="Word Cloud" />
       <ReactWordCloud
         callbacks={{ onWordMouseOver: (e) => e.preventdefault }}
         options={options}

@@ -3,25 +3,29 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { Button, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setRowSelection } from "../../../../state/matrix/matrixSlice";
 
-const OptionVote = ({ handleClose }) => {
+const OptionImpact = ({ handleClose }) => {
   const { rowSelection } = useSelector((state) => state.matrix);
-  const [voteDetails, setVoteDetails] = React.useState(
-    rowSelection[rowSelection.col].votes
+  const [impact, setImpact] = React.useState(
+    rowSelection[rowSelection.col].impact
   );
   const dispatch = useDispatch();
 
+  const handleChange = (e) => {
+    setImpact(e.target.value);
+  };
+
   const handleSubmit = () => {
     const { col } = rowSelection;
+    console.log(rowSelection);
+
     dispatch(
       setRowSelection({
         ...rowSelection,
-        [col]: { ...rowSelection[col], votes: voteDetails, edited: true },
+        [col]: { ...rowSelection[col], impact: parseInt(impact), edited: true },
         edited: true,
       })
     );
@@ -32,31 +36,27 @@ const OptionVote = ({ handleClose }) => {
     <>
       <TitleBox>
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Votes
+          Impact
         </Typography>
         <CloseIcon sx={{ cursor: "pointer" }} onClick={handleClose} />
       </TitleBox>
-      <Box>
-        <Total>Total: {voteDetails.up - voteDetails.down}</Total>
-        <Likes>
-          <ThumbDownIcon
-            onClick={() => setVoteDetails({ ...voteDetails, down: 1 })}
-          />
-          <ThumbUpIcon
-            onClick={() => setVoteDetails({ ...voteDetails, up: 1 })}
-          />
-        </Likes>
-      </Box>
-      <Btn>
+      <Links>
+        <TextField
+          id="outlined-multiline-flexible"
+          label="Impact"
+          type="number"
+          value={impact}
+          onChange={handleChange}
+        />
         <Button onClick={handleSubmit} type="submit">
           Submit
         </Button>
-      </Btn>
+      </Links>
     </>
   );
 };
 
-export default OptionVote;
+export default OptionImpact;
 
 const TitleBox = styled(Box)`
   display: flex;
@@ -65,25 +65,8 @@ const TitleBox = styled(Box)`
   padding: 5px 20px 5px 20px;
 `;
 
-const Total = styled(Typography)`
-  text-align: center;
-  padding-bottom: 10px;
-`;
-
-const Likes = styled(Box)`
+const Links = styled(Box)`
   display: flex;
-  /* background: red; */
-  justify-content: space-around;
-
-  svg {
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-  }
-`;
-
-const Btn = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
+  flex-direction: column;
+  padding: 10px;
 `;
